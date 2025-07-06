@@ -2,7 +2,6 @@
   "name": "mimar-backend",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
@@ -21,6 +20,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.1",
     "multer": "^2.0.1",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^1.1.1"
   }
 }

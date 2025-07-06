@@ -1,27 +1,23 @@
-import cloudinary from '../services/cloudinaryService.js';
+const cloudinary = require('../services/cloudinary');
 
-export const uploadToCloudinary = async (filePath) => {
+const uploadToCloudinary = async (filePath) => {
+  // Validate the file path
+  if (!filePath) {
+    throw new Error('File path is required for upload');
+  }
+  try {
+    // Upload the file to Cloudinary
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: 'mimar',
+      resource_type: 'auto'
+    });
 
-    // Validate the file path
-    if (!filePath) {
-        throw new Error('File path is required for upload');
-    }
-    try {
-
-        // Upload the file to Cloudinary
-        const result = await cloudinary.uploader.upload(filePath, {
-            folder: 'mimar',
-            resource_type: 'auto'
-        });
-
-        return {
-            url: result.secure_url,
-            public_id: result.public_id
-        };
-
-    } catch (error) {
-
-        throw new Error('Failed to upload file to Cloudinary', error);
-
-    }
+    return result ;
+    
+  } catch (error) {
+    console.error('Cloudinary upload failed:', error);
+    throw new Error('Failed to upload file to Cloudinary');
+  }
 };
+
+module.exports = { uploadToCloudinary };
