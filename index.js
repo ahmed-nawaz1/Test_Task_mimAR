@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 // Define routes
-app.use('/api/users', userRoutes);
+app.use(userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to Mimar Backend');
