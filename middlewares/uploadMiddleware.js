@@ -1,21 +1,10 @@
 const multer = require('multer');
 const path = require('path');
 
-// Storage settings
-const storage = multer.diskStorage({
-  // Destination to store the uploaded files
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
+// Use memoryStorage instead of diskStorage
+const storage = multer.memoryStorage();
 
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-    cb(null, uniqueName);
-  }
-});
-
-// File filter
+// File filter for PDF and Image files
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|pdf/;
   const extName = allowedTypes.test(path.extname(file.originalname).toLowerCase());
@@ -27,10 +16,11 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+// Multer config
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
-  fileFilter
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter,
 });
 
 module.exports = upload;
